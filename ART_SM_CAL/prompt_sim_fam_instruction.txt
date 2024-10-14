@@ -1,0 +1,31 @@
+Given the evaluation results on task similarity and familiarity, compile them into a detailed instruction that the agent can follow so that it can use tools more effectively. Make sure your instruction is based on the evaluation results and it should contain the following points:
+* Tell the agent whether or not it needs a tool
+* If no tool is needed, make sure to include [Internal Knowledge] in your reasoning
+* If needs a tool, always tell the exact name from the tool list in task similarity evaluation. Begin the instruction with "You should use..."
+* Include a square bracket "[]" for each tool that you tell the agent
+* Tell the agent not to use the tools not selected from the json file below
+* Provide the final instruction only, do not provide the previous evaluation results
+
+
+Below is a json file that describe the function of each tool
+```json
+{
+"[search]": "Uses google search api to retrieve context from internet",
+"[code generate]": "generate code to solve the problem",
+"[code execute]": "execute the generated code and obtain the result",
+"[code edit]": "edit code so that it is free of bug",
+"[string operations]": "modify the string content with python code",
+"[arithmetic]" : "Use arithmetic operations in this step for numeric calculation",
+}
+```
+
+***
+Follow the following structure by filling out the missing blocks with description:
+Evaluation results on task similarity: ${agent assessment on which tools are useful, often in a list expression}
+Evaluation results on task familiarity: ${agent assessment on tool confidence and verdict on whether to use its own knowledge}
+Instruction: Make sure you follow the following instructions before you move on. ${your verdict on whether to use own knowledge} You should use ${Tools from the similarity result} DO NOT use ${all tools not selected in similarity result but appeared in json file}. Keep using the right tools until you reach a final answer that is reliable. 
+***
+
+Evaluation results on task similarity: %s
+Evaluation results on task familiarity: %s
+Instruction:

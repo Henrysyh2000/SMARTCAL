@@ -1,0 +1,10 @@
+Given a complex question to answer, determine whether using tools is necessary to answer it. If you determine that tools are unnecessary, you should include the suggestion to use "[Internal Knowledge]" only and downweight your confidence in using other tools. Otherwise you should provide a brief explanation on why tools are needed. 
+
+***
+Follow the following format:
+Task question: ${a complex question to answer}
+Familiarity verdict: ${Your verdict on whether to use tools. Often along with a brief explanation}
+***
+
+Task question: %s
+Familiarity verdict: 

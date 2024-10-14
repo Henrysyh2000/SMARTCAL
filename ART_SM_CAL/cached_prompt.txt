@@ -1,0 +1,104 @@
+
+    In these examples, you are given a task description and an input. Learn the format from the examples below and follow the instructions above to answer the question. Be sure to use "[]" to specify tools in subtasks. Also, use a separate '[]' to provide a score from 0 to 100 after each affordance to indicate your confidence level using this affordance.
+    Note: The confidence level indicates the degree of certainty you have about your reasoning and is represented as a percentage.
+    For instance, if your confidence level is 80, it means you are 80 percent certain that your answer is correct and there is a 20 percent chance that it may be incorrect.
+    
+----
+
+    Description: (Middle school arithmetic problems) Solve the following middle-school arithmetic problems, writing out intermediate arithmetic calculations as python code. Store your result as a variable named 'ans'.
+Input: A toy manufacturer receives an order for 400 toys. 5 workers are available to work on the order. 2 of the workers produce 6 toys an hour, and another 2 workers produce 4 toys an hour. They all work on the order during their 10-hour shift, and by the end of their shift the manufacturer still needs another 20 toys to be able to ship the order. How many toys per hour does the fifth worker produce?
+Q1: [generate python code] [50] write down the arithmetic or algebra equations as python code
+#1:
+num_toys_ordered = 400
+num_workers = 5
+toys_produced_per_hour_by_worker1 = 6
+toys_produced_per_hour_by_worker2 = 6
+toys_produced_per_hour_by_worker3 = 4
+toys_produced_per_hour_by_worker4 = 4
+toys_produced_per_hour_by_worker5 = Symbol('toys_produced_per_hour_by_worker5', positive=True)
+hours_worked = 10
+toys_produced = num_toys_ordered-20
+toys_produced_by_all_workers = ( toys_produced_per_hour_by_worker1 + toys_produced_per_hour_by_worker2 + toys_produced_per_hour_by_worker3 + toys_produced_per_hour_by_worker4 + toys_produced_per_hour_by_worker5) * hours_worked
+solution = solve_it(toys_produced_by_all_workers - toys_produced, toys_produced_per_hour_by_worker5)
+ans = solution[toys_produced_per_hour_by_worker5]
+print(ans)
+Q2: [code execute] [80] Execute the python code in #1 and get the value of "ans"
+#2: 18
+Q3: [EOQ]
+Ans: 18
+----
+Input: If two trains depart from a station in opposite directions, and one train is traveling 60 miles an hour while the other is traveling half that distance per hour, how far apart are they from each other after 3 hours?
+Q1: [generate python code] [70] write down the arithmetic or algebra equations as python code
+#1:
+speed_of_first_train = 60
+speed_of_second_train = 30
+distance_apart = speed_of_first_train * 3 + speed_of_second_train * 3
+ans = distance_apart
+print(ans)
+Q2: [code execute] [90] Execute the python code and get the value of "ans"
+#2: 270
+Q3: [add unit] [60] Add the appropriate unit to the final answer.
+#3: 270 miles
+Q4: [EOQ]
+Ans: 270 miles
+----
+Description: (Hindu Knowledge) Answer questions about Hindu mythology by choosing the option that best answers the question.
+Input: In the Mahabharata, Karna is cursed to forget the incantations needed to use which weapon?
+  choice: Anjalikastra
+  choice: Narayanastra
+  choice: Agneyastra
+  choice: Brahmastra
+Q1: [search] [95] In the Mahabharata, Karna is cursed to forget the incantations needed to use which weapon?
+#1: As a result, he cursed Karna, saying that HIS MARTIAL SKILLS, including the use of BRAHMASTRA, would abandon him when he needed them most. Indra, the King of Gods, stung Karna in the form of a bee to get him cursed by Parshuram. Karna walked through the woods in despair, feeling dejected by the curse. A skilled & devoted warrior...
+Q2: [compare] [35] Which option is the answer in #3 most similar to?
+#2: Brahmastra
+Q3: [EOQ]
+Ans: Brahmastra
+----
+Input: In the Hindu epic Ramayana, the main villain was a devotee of which deity?
+  choice: Indra
+  choice: Vishnu
+  choice: Brahma
+  choice: Shiva
+Q1: [subquestion] [45] Can this question be answered step-by-step?
+#1: Yes.
+Q2: [search] [65] In the Hindu epic Ramayana, who is the main villain? 
+#2: Ravana is the main antagonist of the Hindu Epic, the Ramayana. 
+Q3: [search] [65] Ravana was a devotee of which deity?
+#3: Ravana, was an ardent devotee of Lord Shiva, is depicted and described as a great scholar,a brahman,a capable ruler and a maestro of the Veena.
+Q4: [compare] [80] Which option is the answer in #3 most similar to?
+#4: Shiva
+Q5: [EOQ]
+Ans: Shiva
+----
+Description: (Math word problems) Solve the following arithmetic word problems, writing out intermediate arithmetic calculations arithmetic calculations as python code. Store your result as a variable named 'ans'.
+Input: James bought 93 red and 10 blue stickers, he used 31 red sticker on his fridge and 7 blue stickers on his laptop. How many red stickers does James have?
+Q1: [generate python code] [50] write down the arithmetic or algebra equations as python code
+#1:
+original_red_stickers = 93
+used_red_stickers = 31
+ans = original_red_stickers - used_red_stickers
+print(ans)
+Q2: [code execute] [70] Execute the python code and get the value of "ans"
+#2: 62
+Q3: [EOQ]
+Ans: 62
+----
+"Input: There are 5 girls and 4 boys in the Masquerade, 12 more girls and 7 more boys joined. How many more girls than boys are in the Masquerade?
+Q1: [generate python code] [60] write down the arithmetic or algebra equations as python code
+#1:
+num_girls_before = 5
+num_girls_joined = 12
+num_boys_before = 4
+num_boys_joined = 7
+total_girls = num_girls_before + num_girls_joined
+total_boys = num_boys_before + num_boys_joined
+ans = total_girls - total_boys
+print(ans)
+Q2: [code execute] [90] Execute the python code and get the value of "ans"
+#2: 6
+Q3: [EOQ]
+Ans: 6
+----
+Description: %s
+Input: %s

@@ -1,0 +1,12 @@
+You are given a question and several demos on using tools. Extract the name of the tools in the demos that you think are useful to answer the question. Don't select all tools, only include tools that you think are most helpful. Keep in mind to keep the tool list short. Note that tools are often expressed with their names in square brackets "[]".
+
+***
+Follow the following format:
+Demo examples: ${few shot examples showing how to use different tools}
+Task question: ${a complex question to answer}
+Useful tools: ${a short list that keeps the minimal tools that helps answer the question. Remember to include a square bracket "[]" to any referred tool}
+***
+
+Demo examples: %s
+Task question: %s
+Useful tools: 

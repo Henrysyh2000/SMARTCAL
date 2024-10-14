@@ -1,0 +1,365 @@
+###################ORIGINAL PROMPT#########################
+In these examples, you are given a task description and an input. Break the input down into subtasks in order to solve the task. You can use affordances like string operations, search engines, arithmetic functions, or code generation. Be sure to use "[]" to specify affordances in subtasks.
+----
+Description: (Known Unknown) Choose the option that best answers the question. If the question does not have a known answer, choose "Unknown".
+Input: How many hairs were on Neil Armstrong's head when he landed on the moon?
+  choice: Unknown
+  choice: Five million
+Q1: [search] How many hairs were on Neil Armstrong's head when he landed on the moon? 
+#1:
+Apollo 11 (July 16–24, 1969) was the American spaceflight that first landed humans on the Moon. Commander Neil Armstrong and lunar module pilot Buzz Aldrin.
+Neil Alden Armstrong (August 5, 1930 – August 25, 2012) was an American astronaut and aeronautical engineer who became the first person to walk on the Moon.
+Q2: [check answer type] Does the information help answer the question? There could be no definitive answer because the question is too specific, about personal details not in public record, because the answer is not yet known, or the question is opinion-based.
+#2: No. The question is too specific
+Q3: [compare] What is the final answer?
+#3: Unknown
+Q4: [EOQ]
+Ans: Unknown
+----
+Input: Where was Mark Twain born?
+  choice: Unknown
+  choice: Florida, Missouri
+Q1: [search] Where was Mark Twain born?
+#1:
+Mark Twain. Samuel Langhorne Clemens was born in Florida, Missouri, and later moved with his family to Hannibal, Missouri, where he grew up.
+Q2: [check answer type] Does the information help answer the question? There could be no definitive answer because the question is too specific, about personal details not in public record, because the answer is not yet known, or the question is opinion-based.
+#2: Yes. The answer is Florida, Missouri
+Q3: [compare] What is the final answer?
+#3: Florida, Missouri
+Q4: [EOQ]
+Ans: Florida, Missouri
+----
+Description: (Date Understanding) Find the required date in MM/DD/YYYY using information about related events and dates in the input. Clue: First find what day is today.
+Input: The deadline is Jun 1, 2021, which is 2 days away from now. What is the date 24 hours later in MM/DD/YYYY?
+Q1: [string reformat] Jun 1, 2021 in MM/DD/YYYY
+#1: 06/01/2021
+Q2: [arithmetic] 06/01/2021 is 2 days away from now. What date is today?
+#2: Today is 04/01/2021
+Q3: [arithmetic] What date is 24 hours later than today?  
+#3: 05/01/2021
+Q4: [EOQ]
+Ans: 05/31/2021
+----
+Input: Today is the first day of 2007. What is the date one week from today in MM/DD/YYYY?
+Q1: [string reformat] first day of 2007 in MM/DD/YYYY 
+#1: 01/01/2007
+Q2: [arithmetic] What date is one week from 01/01/2007? 
+#2: 01/08/2007
+Q3: [EOQ]
+Ans: 01/08/2007
+----
+Description: %s
+Input: %s
+
+
+###################LOGPROB PROMPT#########################
+    In these examples, you are given a task description and an input. 
+    Break the input down into subtasks in order to solve the task. You can use affordances like string operations, search engines, arithmetic functions, or code generation. 
+    Be sure to use "[]" to specify affordances in subtasks. 
+    Also, use a separate '[]' to provide a score from 0 to 100 after each affordance to indicate your confidence level using this affordance. 
+    If you are confident that your internal knowledge is more reliable than external tools, use your own knowledge.
+    When solving the task, avoid using affordances with low confidence level in the demonstrations below, because it often indicates a higher chance of making mistakes. If you still want to use them, make sure to assign a low confidence score.
+
+    Note: The confidence level indicates the degree of certainty you have about your reasoning and is represented as a percentage. 
+    For instance, if your confidence level is 80, it means you are 80 percent certain that your answer is correct and there is a 20 percent chance that it may be incorrect.
+    
+----
+Description: (Known Unknown) Choose the option that best answers the question. If the question does not have a known answer, choose "Unknown".
+Input: How many hairs were on Neil Armstrong's head when he landed on the moon?
+  choice: Unknown
+  choice: Five million
+Q1: [search] [80] How many hairs were on Neil Armstrong's head when he landed on the moon? 
+#1:
+Apollo 11 (July 16–24, 1969) was the American spaceflight that first landed humans on the Moon. Commander Neil Armstrong and lunar module pilot Buzz Aldrin.
+Neil Alden Armstrong (August 5, 1930 – August 25, 2012) was an American astronaut and aeronautical engineer who became the first person to walk on the Moon.
+Q2: [check answer type] [90] Does the information help answer the question? There could be no definitive answer because the question is too specific, about personal details not in public record, because the answer is not yet known, or the question is opinion-based.
+#2: No. The question is too specific
+Q3: [compare] [90] What is the final answer?
+#3: Unknown
+Q4: [EOQ]
+Ans: Unknown
+----
+Input: Where was Mark Twain born?
+  choice: Unknown
+  choice: Florida, Missouri
+Q1: [search] [80] Where was Mark Twain born?
+#1:
+Mark Twain. Samuel Langhorne Clemens was an American novelist, he died in 1849.
+Q2: [check answer type] [90] Does the information help answer the question? There could be no definitive answer because the question is too specific, about personal details not in public record, because the answer is not yet known, or the question is opinion-based.
+#2: No. The question is asking for the birthplace, but there is no information.
+Q3: [Internal Knowledge] [90] Where was Mark Twain born?
+#3: Florida, Missouri
+Q4: [EOQ]
+Ans: Florida, Missouri
+----
+Description: (Date Understanding) Find the required date in MM/DD/YYYY using information about related events and dates in the input. Clue: First find what day is today.
+Input: The deadline is Jun 1, 2021, which is 2 days away from now. What is the date 24 hours later in MM/DD/YYYY?
+Q1: [string reformat] [15] Jun 1, 2021 in MM/DD/YYYY
+#1: 06/01/2021
+Q2: [arithmetic] [20] 06/01/2021 is 2 days away from now. What date is today?
+#2: Today is 04/01/2021
+Q3: [arithmetic] [15] What date is 24 hours later than today?  
+#3: 05/01/2021
+Q4: [EOQ]
+Ans: 05/31/2021
+----
+Input: Today is the first day of 2007. What is the date one week from today in MM/DD/YYYY?
+Q1: [string reformat] [15] first day of 2007 in MM/DD/YYYY 
+#1: 01/01/2007
+Q2: [arithmetic] [20] What date is one week from 01/01/2007? 
+#2: 01/08/2007
+Q3: [EOQ]
+Ans: 01/08/2007
+----
+Description: %s
+Input: %s
+
+
+##########################SKELETON ART FRAMEWORK#########################
+Follow the instructions below to complete the task. Use the format provided below. 
+1. Break the input down into subtasks in order to solve the task. You are given several categories of affordances with the following structure. The keys are affordance categories while the list include the tools that you can use.  
+{
+    "string operations": [string edit, string reformat, string reverse], 
+    "search engine": [search], 
+    "arithmetic functions": [arithmetic], 
+    "code generation": [python code], 
+    "generic": [compare, check answer type]
+}
+2. NOT ALL TOOLS ARE HELPFUL! Hint: from the tools above, 'search', 'arithmetic', 'check answer type', 'Internal Knowledge' will have a larger chance to succeed!
+Be sure to use "[]" to include the tool you use from that affordance category. 
+3. Use a separate "[]" to provide a score from 0 to 100 after each affordance to indicate your confidence level using this affordance. 
+4. If you are confident that your internal knowledge is more reliable than external tools, you can use "[internal knowledge]" as your affordance.
+5. Write "[EOQ]" if you feel the reasoning is sufficient to provide a final answer
+
+Note: The confidence level indicates the degree of certainty you have about your reasoning and is represented as a percentage. For instance, if your confidence level is 80, it means you are 80 percent certain that your answer is correct and there is a 20 percent chance that it may be incorrect.
+
+Below is the answering format you should follow, note that "${}" is a soft coded sign that is subject to the content.
+----
+Description: (${task name}) ${task description}
+Input: ${question to answer}
+Q1: [${The tool within an affordance category}] [${Your confidence score of using this tool}] ${Your breakdown of the subtask}
+#1: ${output from the subtask}
+Q2: ...
+#2: ...
+
+...
+
+Q${n}: [EOQ]
+Ans: ${A short answer to the input question}
+----
+Description: %s
+Input: %s
+
+
+#############UNCALIBRATED PROMPT##################
+In these examples, you are given a task description and an input. Break the input down into subtasks in order to solve the task. You can use affordances like string operations, search engines, arithmetic functions, or code generation. Be sure to use "[]" to specify affordances in subtasks. Also, attach a "[0]" after each tool usage. Learn the format in the demonstrations below and choose the correct tool to solve the task.
+
+----
+Description: (Known Unknown) Choose the option that best answers the question. If the question does not have a known answer, choose "Unknown".
+Input: How many hairs were on Neil Armstrong's head when he landed on the moon?
+  choice: Unknown
+  choice: Five million
+Q1: [search] [0] How many hairs were on Neil Armstrong's head when he landed on the moon? 
+#1:
+Apollo 11 (July 16–24, 1969) was the American spaceflight that first landed humans on the Moon. Commander Neil Armstrong and lunar module pilot Buzz Aldrin.
+Neil Alden Armstrong (August 5, 1930 – August 25, 2012) was an American astronaut and aeronautical engineer who became the first person to walk on the Moon.
+Q2: [check answer type] [0] Does the information help answer the question? There could be no definitive answer because the question is too specific, about personal details not in public record, because the answer is not yet known, or the question is opinion-based.
+#2: No. The question is too specific
+Q3: [compare] [0] What is the final answer?
+#3: Unknown
+Q4: [EOQ]
+Ans: Unknown
+----
+Input: Where was Mark Twain born?
+  choice: Unknown
+  choice: Florida, Missouri
+Q1: [search] [0] Where was Mark Twain born?
+#1:
+Mark Twain. Samuel Langhorne Clemens was an American novelist, he died in 1849.
+Q2: [check answer type] [0] Does the information help answer the question? There could be no definitive answer because the question is too specific, about personal details not in public record, because the answer is not yet known, or the question is opinion-based.
+#2: No. The question is asking for the birthplace, but there is no information.
+Q3: [Internal Knowledge] [0] Where was Mark Twain born?
+#3: Florida, Missouri
+Q4: [EOQ]
+Ans: Florida, Missouri
+----
+Description: (Date Understanding) Find the required date in MM/DD/YYYY using information about related events and dates in the input. Clue: First find what day is today.
+Input: The deadline is Jun 1, 2021, which is 2 days away from now. What is the date 24 hours later in MM/DD/YYYY?
+Q1: [string reformat] [0] Jun 1, 2021 in MM/DD/YYYY
+#1: 06/01/2021
+Q2: [arithmetic] [0] 06/01/2021 is 2 days away from now. What date is today?
+#2: Today is 04/01/2021
+Q3: [arithmetic] [0] What date is 24 hours later than today?  
+#3: 05/01/2021
+Q4: [EOQ]
+Ans: 05/31/2021
+----
+Input: Today is the first day of 2007. What is the date one week from today in MM/DD/YYYY?
+Q1: [string reformat] [0] first day of 2007 in MM/DD/YYYY 
+#1: 01/01/2007
+Q2: [arithmetic] [0] What date is one week from 01/01/2007? 
+#2: 01/08/2007
+Q3: [EOQ]
+Ans: 01/08/2007
+----
+Description: %s
+Input: %s
+
+################HYBRID PROMPT################
+Follow the instructions below to complete the task. Use the format provided below. 
+1. Break the input down into subtasks in order to solve the task. You can use tools like string operations, search engines, arithmetic functions, or code generation. 
+
+2. NOT ALL TOOLS ARE HELPFUL! Below is a list describing the success rate of using each tool. For tools with a success rate higher than 50, you should use more frequently. For tools with a success rate lower than 50, you should NOT using them. Be sure to use "[]" to specify these tools in subtasks. 
+```begin of list
+
+Tool success rate (in percentage)
+---
+search 73
+check answer type 72
+compare 65
+arithmetic 65
+string 57
+string reformat 53
+string operation 36
+count 32
+string operations 32
+string search 31
+string compare 23
+string split 23
+string comparison 22
+string manipulation 18
+string extract 18
+filter 13
+
+end of list```
+
+
+3. Use a separate "[]" to provide a score from 0 to 100 after each affordance to indicate your confidence level using this affordance. You should refer to the success rate in the list above to assign your confidence score. 
+
+Note: The confidence level indicates the degree of certainty you have about your reasoning and is represented as a percentage. For instance, if your confidence level is 80, it means you are 80 percent certain that your answer is correct and there is a 20 percent chance that it may be incorrect.
+
+Below is the format to follow along some examples. Learn from these examples and use the correct tools:
+----
+Description: (${task name}) ${task description}
+Input: ${question to answer}
+Q1: [${The tool within an affordance category}] [${Your confidence score of using this tool}] ${Your breakdown of the subtask}
+#1: ${output from the subtask}
+Q2: ...
+#2: ...
+
+...
+
+Q${n}: [EOQ]
+Ans: ${A short answer to the input question}
+----
+Description: (Known Unknown) Choose the option that best answers the question. If the question does not have a known answer, choose "Unknown".
+Input: How many hairs were on Neil Armstrong's head when he landed on the moon?
+  choice: Unknown
+  choice: Five million
+Q1: [search] [80] How many hairs were on Neil Armstrong's head when he landed on the moon? 
+#1:
+Apollo 11 (July 16–24, 1969) was the American spaceflight that first landed humans on the Moon. Commander Neil Armstrong and lunar module pilot Buzz Aldrin.
+Neil Alden Armstrong (August 5, 1930 – August 25, 2012) was an American astronaut and aeronautical engineer who became the first person to walk on the Moon.
+Q2: [check answer type] [90] Does the information help answer the question? There could be no definitive answer because the question is too specific, about personal details not in public record, because the answer is not yet known, or the question is opinion-based.
+#2: No. The question is too specific
+Q3: [compare] [90] What is the final answer?
+#3: Unknown
+Q4: [EOQ]
+Ans: Unknown
+----
+Input: Where was Mark Twain born?
+  choice: Unknown
+  choice: Florida, Missouri
+Q1: [search] [80] Where was Mark Twain born?
+#1:
+Mark Twain. Samuel Langhorne Clemens was an American novelist, he died in 1849.
+Q2: [check answer type] [90] Does the information help answer the question? There could be no definitive answer because the question is too specific, about personal details not in public record, because the answer is not yet known, or the question is opinion-based.
+#2: No. The question is asking for the birthplace, but there is no information.
+Q3: [Internal Knowledge] [90] Where was Mark Twain born?
+#3: Florida, Missouri
+Q4: [EOQ]
+Ans: Florida, Missouri
+----
+Description: (Date Understanding) Find the required date in MM/DD/YYYY using information about related events and dates in the input. Clue: First find what day is today.
+Input: The deadline is Jun 1, 2021, which is 2 days away from now. What is the date 24 hours later in MM/DD/YYYY?
+Q1: [string reformat] [15] Jun 1, 2021 in MM/DD/YYYY
+#1: 06/01/2021
+Q2: [arithmetic] [20] 06/01/2021 is 2 days away from now. What date is today?
+#2: Today is 04/01/2021
+Q3: [arithmetic] [15] What date is 24 hours later than today?  
+#3: 05/01/2021
+Q4: [EOQ]
+Ans: 05/31/2021
+----
+Input: Today is the first day of 2007. What is the date one week from today in MM/DD/YYYY?
+Q1: [string reformat] [15] first day of 2007 in MM/DD/YYYY 
+#1: 01/01/2007
+Q2: [arithmetic] [20] What date is one week from 01/01/2007? 
+#2: 01/08/2007
+Q3: [EOQ]
+Ans: 01/08/2007
+----
+Description: %s
+Input: %s
+
+
+#####################SELF_EVAL PROMPT#######################
+In these examples, you are given a task description and an input. Learn the format from the examples below and follow the instructions above to answer the question. Be sure to use "[]" to specify tools in subtasks. Also, use a separate '[]' to provide a score from 0 to 100 after each affordance to indicate your confidence level using this affordance. 
+    Note: The confidence level indicates the degree of certainty you have about your reasoning and is represented as a percentage. 
+    For instance, if your confidence level is 80, it means you are 80 percent certain that your answer is correct and there is a 20 percent chance that it may be incorrect.
+    
+----
+Description: (Known Unknown) Choose the option that best answers the question. If the question does not have a known answer, choose "Unknown".
+Input: How many hairs were on Neil Armstrong's head when he landed on the moon?
+  choice: Unknown
+  choice: Five million
+Q1: [search] [80] How many hairs were on Neil Armstrong's head when he landed on the moon? 
+#1:
+Apollo 11 (July 16–24, 1969) was the American spaceflight that first landed humans on the Moon. Commander Neil Armstrong and lunar module pilot Buzz Aldrin.
+Neil Alden Armstrong (August 5, 1930 – August 25, 2012) was an American astronaut and aeronautical engineer who became the first person to walk on the Moon.
+Q2: [check answer type] [90] Does the information help answer the question? There could be no definitive answer because the question is too specific, about personal details not in public record, because the answer is not yet known, or the question is opinion-based.
+#2: No. The question is too specific
+Q3: [compare] [90] What is the final answer?
+#3: Unknown
+Q4: [EOQ]
+Ans: Unknown
+----
+Input: Where was Mark Twain born?
+  choice: Unknown
+  choice: Florida, Missouri
+Q1: [search] [80] Where was Mark Twain born?
+#1:
+Mark Twain. Samuel Langhorne Clemens was an American novelist, he died in 1849.
+Q2: [check answer type] [90] Does the information help answer the question? There could be no definitive answer because the question is too specific, about personal details not in public record, because the answer is not yet known, or the question is opinion-based.
+#2: No. The question is asking for the birthplace, but there is no information.
+Q3: [Internal Knowledge] [90] Where was Mark Twain born?
+#3: Florida, Missouri
+Q4: [EOQ]
+Ans: Florida, Missouri
+----
+Description: (Date Understanding) Find the required date in MM/DD/YYYY using information about related events and dates in the input. Clue: First find what day is today.
+Input: The deadline is Jun 1, 2021, which is 2 days away from now. What is the date 24 hours later in MM/DD/YYYY?
+Q1: [string reformat] [15] Jun 1, 2021 in MM/DD/YYYY
+#1: 06/01/2021
+Q2: [arithmetic] [20] 06/01/2021 is 2 days away from now. What date is today?
+#2: Today is 04/01/2021
+Q3: [arithmetic] [15] What date is 24 hours later than today?  
+#3: 05/01/2021
+Q4: [EOQ]
+Ans: 05/31/2021
+----
+Input: Today is the first day of 2007. What is the date one week from today in MM/DD/YYYY?
+Q1: [string reformat] [15] first day of 2007 in MM/DD/YYYY 
+#1: 01/01/2007
+Q2: [arithmetic] [20] What date is one week from 01/01/2007? 
+#2: 01/08/2007
+Q3: [EOQ]
+Ans: 01/08/2007
+----
+Description: %s
+Input: %s
+
+
+
+
+
